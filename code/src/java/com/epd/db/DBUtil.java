@@ -20,7 +20,7 @@ public class DBUtil {
 
         try {
             String DATABASE_URL = "jdbc:mysql://127.0.0.1:3306/liveintradaydata";
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName("com.mysql.jdbc.Driver");
             this.con = DriverManager.getConnection(DATABASE_URL, "root", "root");
             return con;
 
