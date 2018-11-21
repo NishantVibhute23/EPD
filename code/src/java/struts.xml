@@ -1,0 +1,20 @@
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <!-- Configuration for the default package. -->
+    <package name="default" extends="struts-default">
+                
+        <action name="login" class="com.epd.redirect.Login" method="checkLogin">
+            <result name="success">/jsp/sample.jsp</result>
+            <result name="failed">/index.jsp</result>
+        </action>
+        
+        <action name="gainerslosers" class="com.epd.redirect.GainersLosers" method="redirect">
+            <result name="success">/jsp/gainerslosers.jsp</result>
+            <result name="failed">/index.jsp</result>
+        </action>
+        
+    </package>
+</struts>
