@@ -16,5 +16,16 @@
             <result name="failed">/index.jsp</result>
         </action>
         
+        <action name="terminal" class="com.epd.redirect.Terminal" >
+            <result name="success">/jsp/terminal.jsp</result>
+            <result name="failed">/index.jsp</result>
+        </action>
+        
+        
+        <action name="getIndexDetails" class="com.epd.redirect.Terminal" method="getIndexDetails" >
+            <result name="success">/jsp/indexDetails.jsp</result>
+            <result name="failed">/index.jsp</result>
+        </action>
+        
     </package>
 </struts>

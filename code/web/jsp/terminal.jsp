@@ -1,10 +1,9 @@
-<%@ taglib prefix="s" uri="/struts-tags"%>
 <!DOCTYPE html>
-
+<%@ taglib prefix="s" uri="/struts-tags"%>
 <html lang="en">
 
-    <head>
 
+    <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
@@ -21,21 +20,25 @@
         <link href="assets/css/black-dashboard.css?v=1.0.0" rel="stylesheet" />
         <!-- CSS Just for demo purpose, don't include it in your project -->
         <link href="assets/demo/demo.css" rel="stylesheet" />
-
-
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <style>
+            .main-panel>.content {padding-left: 30px !important; padding-top: 30px !important}
+            .table-responsive {overflow: hidden !important}
+            body {line-height: 0.2 !important}
+            .card-body {padding-top: 0px !important;padding-bottom: 0px !important}
+           .mt-100{
+    margin-top:100px;
+}
+    
+        </style>
     </head>
 
     <body class="">
         <div class="wrapper">
-            <div class="sidebar">
-                <!--
-                  Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red"
-                -->
-                <jsp:include page="sidebar.jsp"/>
-            </div>
+
             <div class="main-panel">
                 <!-- Navbar -->
-                <jsp:include page="navigationbar.jsp"/>
+
                 <!-- End Navbar -->
                 <div class="content">
                     <div class="row">
@@ -44,19 +47,10 @@
                                 <div class="card-header ">
                                     <div class="row">
                                         <div class="col-sm-6 text-left">
-                                            <h2 class="card-title">Top Gainers & Losers</h2>
+                                            <h4 class="card-title">Nifty : <font color="<s:property value="indexList[indexList.size()-1].prevChange"/>"> <s:property value="indexList[indexList.size()-1].LTP"/></font></h4>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class='col-sm-6'>
-                                            <input type='text' class="form-control" id='datetimepicker4' />
-                                        </div>
-                                        <script type="text/javascript">
-                                            $(function () {
-                                                $('#datetimepicker4').datetimepicker();
-                                            });
-                                        </script>
-                                    </div>
+
 
 
                                 </div>
@@ -65,48 +59,59 @@
                                         <div class="col-lg-6 col-md-12">
                                             <div class="card ">
                                                 <div class="card-header">
-                                                    <h4 class="card-title"> Top Gainers</h4>
+
                                                 </div>
                                                 <div class="card-body">
                                                     <div class="table-responsive">
-                                                        <table class="table tablesorter " id="">
+                                                        <table class="table tablesorter " id="data1">
                                                             <thead class=" text-primary">
                                                                 <tr>
                                                                     <th>
                                                                         Name
                                                                     </th>
                                                                     <th>
-                                                                        Open
-                                                                    </th>
-                                                                    <th>
-                                                                        High
-                                                                    </th>
-                                                                    <th>
-                                                                        Low
-                                                                    </th>
-                                                                    <th>
-                                                                        Last Price
+                                                                        LTP
                                                                     </th>
                                                                     <th>
                                                                         Change
                                                                     </th>
                                                                     <th>
-                                                                        % chg.
+                                                                        Volume
                                                                     </th>
-
+                                                                    <th>
+                                                                        Buy Price
+                                                                    </th>
+                                                                    <th>
+                                                                        Sell Price
+                                                                    </th>
+                                                                    <th>
+                                                                        Buy Qty
+                                                                    </th>
+                                                                    <th>
+                                                                        Sell Qty
+                                                                    </th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
 
-                                                                <s:iterator value="gainerList">
+                                                                <s:iterator value="indexList" begin="0" end="24">
                                                                     <tr>
-                                                                        <td><s:property value="indexName"/></td>
-                                                                        <td><s:property value="open"/></td>
-                                                                        <td><s:property value="high"/></td>
-                                                                        <td><s:property value="low"/></td>
-                                                                        <td><s:property value="lastPrice"/></td>
+                                                                        <td><s:property value="companyName"/></td>
+
+                                                                        <td >
+
+
+                                                                            <font color="<s:property value="prevChange"/>"><s:property value="LTP"/></font></td>
                                                                         <td><s:property value="change"/></td>
-                                                                        <td><s:property value="precChange"/></td>
+                                                                        <td><s:property value="volume"/></td>
+                                                                        <td><s:property value="buyPrice"/></td>
+                                                                        <td><s:property value="sellPrice"/></td>
+                                                                        <td><s:property value="buyQty"/></td>
+                                                                        <td><s:property value="sellQty"/></td>
+                                                                        <td>
+                                                                            <a href="<s:url action="getIndexDetails"/>">  <i class="fa fa-bar-chart" style="font-size:10px;color:red"></i></a>
+
+                                                                        </td>
                                                                     </tr>
                                                                 </s:iterator>
 
@@ -121,7 +126,7 @@
                                         <div class="col-lg-6 col-md-12">
                                             <div class="card ">
                                                 <div class="card-header">
-                                                    <h4 class="card-title">  Top Losers</h4>
+
                                                 </div>
                                                 <div class="card-body">
                                                     <div class="table-responsive">
@@ -132,37 +137,48 @@
                                                                         Name
                                                                     </th>
                                                                     <th>
-                                                                        Open
-                                                                    </th>
-                                                                    <th>
-                                                                        High
-                                                                    </th>
-                                                                    <th>
-                                                                        Low
-                                                                    </th>
-                                                                    <th>
-                                                                        Last Price
+                                                                        LTP
                                                                     </th>
                                                                     <th>
                                                                         Change
                                                                     </th>
                                                                     <th>
-                                                                        % chg.
+                                                                        Volume
+                                                                    </th>
+                                                                    <th>
+                                                                        Buy Price
+                                                                    </th>
+                                                                    <th>
+                                                                        Sell Price
+                                                                    </th>
+                                                                    <th>
+                                                                        Buy Qty
+                                                                    </th>
+                                                                    <th>
+                                                                        Sell Qty
                                                                     </th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <s:iterator value="losersList">
+
+                                                                <s:iterator value="indexList" begin="25" end="49">
                                                                     <tr>
-                                                                        <td><s:property value="indexName"/></td>
-                                                                        <td><s:property value="open"/></td>
-                                                                        <td><s:property value="high"/></td>
-                                                                        <td><s:property value="low"/></td>
-                                                                        <td><s:property value="lastPrice"/></td>
+                                                                        <td><s:property value="companyName"/></td>
+                                                                        <td><font color="<s:property value="prevChange"/>"><s:property value="LTP"/></font></td>
                                                                         <td><s:property value="change"/></td>
-                                                                        <td><s:property value="precChange"/></td>
+                                                                        <td><s:property value="volume"/></td>
+                                                                        <td><s:property value="buyPrice"/></td>
+                                                                        <td><s:property value="sellPrice"/></td>
+                                                                        <td><s:property value="buyQty"/></td>
+                                                                        <td><s:property value="sellQty"/></td>
+                                                                        <td>
+                                                                            <a href="<s:url action="getIndexDetails"/>"> <i class="fa fa-bar-chart" style="font-size:10px;color:red"></i></a>
+
+                                                                        </td>
                                                                     </tr>
                                                                 </s:iterator>
+
+
 
                                                             </tbody>
                                                         </table>
@@ -174,21 +190,27 @@
                                 </div>
 
 
+
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
-        </div>
+           
 
         <!--   Core JS Files   -->
         <script src="assets/js/core/jquery.min.js"></script>
         <script src="assets/js/core/popper.min.js"></script>
-        <script src="assets/js/core/bootstrap.min.js"></script>
+        <!--<script src="assets/js/core/bootstrap.min.js"></script>-->
         <script src="assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
         <!--  Google Maps Plugin    -->
         <!-- Place this tag in your head or just before your close body tag. -->
-        <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
         <!-- Chart JS -->
         <script src="assets/js/plugins/chartjs.min.js"></script>
         <!--  Notifications Plugin    -->
@@ -199,5 +221,8 @@
 
 
     </body>
+
+
+   
 
 </html>

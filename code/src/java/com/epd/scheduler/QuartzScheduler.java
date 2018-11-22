@@ -42,15 +42,19 @@ public class QuartzScheduler {
     public static void scheduleJobs() {
         try {
             JobDetail jobGetTopGainerLosers = JobBuilder.newJob(GainerLoserScheduler.class).withIdentity("topGainerLosers", "group").build();
-           
 
             Trigger triggerGetTopGainerLosers = TriggerBuilder.newTrigger().withIdentity("GetTopGainerLosers", "group")
-                    .withSchedule(CronScheduleBuilder.cronSchedule("0 50 22 ? * MON-FRI")).build();
-
+                    .withSchedule(CronScheduleBuilder.cronSchedule("0 23 18 ? * MON-FRI")).build();
 
             scheduler.scheduleJob(jobGetTopGainerLosers, triggerGetTopGainerLosers);
 
-          
+            JobDetail jobGetStockPriceValue = JobBuilder.newJob(EquityData.class).withIdentity("GetStockPriceValueJob", "group").build();
+
+            Trigger triggerGetStockPriceValue = TriggerBuilder.newTrigger().withIdentity("GetStockPriceValueTrigger", "group")
+                    .withSchedule(CronScheduleBuilder.cronSchedule("0/30 * * ? * MON,TUE,WED,THU,FRI *")).build();
+
+            scheduler.scheduleJob(jobGetStockPriceValue, triggerGetStockPriceValue);
+
             // schedule it
         } catch (SchedulerException ex) {
             Logger.getLogger(QuartzScheduler.class.getName()).log(Level.SEVERE, null, ex);
@@ -58,4 +62,3 @@ public class QuartzScheduler {
     }
 
 }
-

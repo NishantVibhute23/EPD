@@ -35,9 +35,9 @@
             </a>
           </li>
           <li>
-            <a href="./map.html">
+            <a href="terminal">
               <i class="tim-icons icon-pin"></i>
-              <p>Maps</p>
+              <p>Terminal</p>
             </a>
           </li>
           <li>
