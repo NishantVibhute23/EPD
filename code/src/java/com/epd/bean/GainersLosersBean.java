@@ -10,11 +10,12 @@ package com.epd.bean;
  * @author nishant.vibhute
  */
 public class GainersLosersBean {
-    
+
+    private int companyId;
     private String indexName;
-    private double open; 
+    private double open;
     private double high;
-    private double low ;
+    private double low;
     private double lastPrice;
     private double change;
     private double precChange;
@@ -74,7 +75,13 @@ public class GainersLosersBean {
     public void setPrecChange(double precChange) {
         this.precChange = precChange;
     }
- 
-    
-    
+
+    public int getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(int companyId) {
+        this.companyId = companyId;
+    }
+
 }

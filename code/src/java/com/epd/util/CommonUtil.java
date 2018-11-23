@@ -39,4 +39,32 @@ public class CommonUtil {
 
     }
 
+    public static double calculateTarget(double unitPrice, int type) {
+        double target = 0;
+        if (unitPrice <= 100) {
+            target = unitPrice + (type == 1 ? 0.50 : -0.50);
+        } else if (unitPrice > 100 && unitPrice <= 200) {
+            target = unitPrice + (type == 1 ? 0.75 : -0.75);
+        } else if (unitPrice > 200 && unitPrice <= 300) {
+            target = unitPrice + (type == 1 ? 1.25 : -1.25);
+        } else if (unitPrice > 300) {
+            target = unitPrice + (type == 1 ? 2 : -2);
+        }
+        return target;
+    }
+
+    public static double calculateStopLoss(double unitPrice, int type) {
+        double stopLoss = 0;
+        if (unitPrice <= 100) {
+            stopLoss = unitPrice + (type == 1 ? -0.25 : 0.25);
+        } else if (unitPrice > 100 && unitPrice <= 200) {
+            stopLoss = unitPrice + (type == 1 ? -0.38 : 0.38);
+        } else if (unitPrice > 200 && unitPrice <= 300) {
+            stopLoss = unitPrice + (type == 1 ? -0.75 : 0.75);
+        } else if (unitPrice > 300) {
+            stopLoss = unitPrice + (type == 1 ? -1 : 1);
+        }
+        return stopLoss;
+    }
+
 }

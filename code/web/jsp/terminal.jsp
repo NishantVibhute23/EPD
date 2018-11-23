@@ -109,7 +109,7 @@
                                                                         <td><s:property value="buyQty"/></td>
                                                                         <td><s:property value="sellQty"/></td>
                                                                         <td>
-                                                                            <a href="<s:url action="getIndexDetails"/>">  <i class="fa fa-bar-chart" style="font-size:10px;color:red"></i></a>
+                                                                            <a href="<s:url action="getIndexDetails"><s:param name="companyId"><s:property value="companyId"/></s:param></s:url>">  <i class="fa fa-bar-chart" style="font-size:10px;color:red"></i></a>
 
                                                                         </td>
                                                                     </tr>
@@ -172,7 +172,7 @@
                                                                         <td><s:property value="buyQty"/></td>
                                                                         <td><s:property value="sellQty"/></td>
                                                                         <td>
-                                                                            <a href="<s:url action="getIndexDetails"/>"> <i class="fa fa-bar-chart" style="font-size:10px;color:red"></i></a>
+                                                                            <a href="<s:url action="getIndexDetails"><s:param name="companyId"><s:property value="companyId"/></s:param></s:url>"> <i class="fa fa-bar-chart" style="font-size:10px;color:red"></i></a>
 
                                                                         </td>
                                                                     </tr>

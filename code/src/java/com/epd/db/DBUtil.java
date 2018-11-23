@@ -13,14 +13,14 @@ import java.sql.DriverManager;
  * @author nishant.vibhute
  */
 public class DBUtil {
-    
-  
+
     Connection con;
+
     public Connection getConnection() {
 
         try {
-            String DATABASE_URL = "jdbc:mysql://127.0.0.1:3306/liveintradaydata";
-            Class.forName("com.mysql.jdbc.Driver");
+            String DATABASE_URL = "jdbc:mysql://127.0.0.1:3306/liveintradaydata_new";
+            Class.forName("com.mysql.cj.jdbc.Driver");
             this.con = DriverManager.getConnection(DATABASE_URL, "root", "root");
             return con;
 
@@ -29,7 +29,7 @@ public class DBUtil {
         }
         return con;
     }
-    
+
     public void closeConnection(Connection con) {
         try {
             if (con != null) {
@@ -39,5 +39,5 @@ public class DBUtil {
             System.out.println(e);
         }
     }
-    
+
 }

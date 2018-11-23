@@ -6,6 +6,9 @@
 package com.epd.redirect;
 
 import com.epd.bean.IndexData;
+import com.epd.charts.ChartsDataDetails;
+import com.epd.charts.Data;
+import com.epd.charts.Datasets;
 import com.epd.dao.IndexDao;
 import com.epd.dao.StategyDao;
 import com.epd.util.MovingAverage;
@@ -30,7 +33,8 @@ public class Terminal extends ActionSupport implements SessionAware {
     StategyDao strategyDao = new StategyDao();
     List<IndexData> indexList = new ArrayList<>();
     ObjectMapper objectMapper = new ObjectMapper();
-    String dataMA = "";
+    String chartData = "";
+    int companyId;
 
     private SessionMap<String, Object> sessionMap;
 
@@ -60,10 +64,42 @@ public class Terminal extends ActionSupport implements SessionAware {
 
     public String getIndexDetails() {
         MovingAverage ma = new MovingAverage();
-        List<IndexData> indexList = strategyDao.getCompanyDataMinuteWise(4);
+        List<IndexData> indexList = strategyDao.getCompanyDataMinuteWise(companyId);
         indexList = ma.getMovingAverage(indexList, 50);
         try {
-            dataMA = objectMapper.writeValueAsString(indexList);
+            ChartsDataDetails chartsDataDetails = new ChartsDataDetails();
+            chartsDataDetails.setType("line");
+            Data data = new Data();
+
+            List<String> labels = new ArrayList<>();
+            List<Datasets> datasets = new ArrayList<>();
+
+            Datasets datasetLTP = new Datasets();
+            datasetLTP.setLabel("LTP");
+            List<Double> dataLTP = new ArrayList<>();
+            datasetLTP.setBorderColor("red");
+
+            Datasets datasetMA = new Datasets();
+            datasetMA.setLabel("MA");
+            List<Double> dataMA = new ArrayList<>();
+            datasetMA.setBorderColor("yellow");
+
+            for (int i = 0; i < indexList.size(); i++) {
+                IndexData id = indexList.get(i);
+                labels.add(id.getDateTime());
+                dataLTP.add(id.getLTP());
+                dataMA.add(id.getMA200());
+            }
+            datasetMA.setData(dataMA);
+            datasetLTP.setData(dataLTP);
+
+            datasets.add(datasetMA);
+            datasets.add(datasetLTP);
+            data.setLabels(labels);
+            data.setDatasets(datasets);
+            chartsDataDetails.setData(data);
+
+            chartData = objectMapper.writeValueAsString(chartsDataDetails);
         } catch (IOException ex) {
             Logger.getLogger(Terminal.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -91,12 +127,20 @@ public class Terminal extends ActionSupport implements SessionAware {
         this.sessionMap = sessionMap;
     }
 
-    public String getDataMA() {
-        return dataMA;
+    public String getChartData() {
+        return chartData;
     }
 
-    public void setDataMA(String dataMA) {
-        this.dataMA = dataMA;
+    public void setChartData(String chartData) {
+        this.chartData = chartData;
+    }
+
+    public int getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(int companyId) {
+        this.companyId = companyId;
     }
 
 }

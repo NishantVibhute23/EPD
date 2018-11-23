@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -74,6 +75,40 @@ public class GainerLoserDao extends DBUtil {
         }
 
         return count;
+    }
+
+    public List<GainersLosersBean> getGainersAndLosers(String date, double min, double max, int type) {
+        List<GainersLosersBean> gainersLoserList = new ArrayList<>();
+
+        try {
+            conn = getConnection();
+            PreparedStatement ps = this.conn.prepareStatement("call getGainersLosers(?,?,?,?)");
+            ps.setString(1, date);
+            ps.setDouble(2, min);
+            ps.setDouble(3, max);
+            ps.setInt(4, type);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                GainersLosersBean gainersLosersBean = new GainersLosersBean();
+                gainersLosersBean.setCompanyId(rs.getInt(1));
+                gainersLosersBean.setIndexName(rs.getString(2));
+                gainersLosersBean.setOpen(rs.getDouble(3));
+                gainersLosersBean.setHigh(rs.getDouble(4));
+                gainersLosersBean.setLow(rs.getDouble(5));
+                gainersLosersBean.setLastPrice(rs.getDouble(6));
+                gainersLosersBean.setChange(rs.getDouble(7));
+                gainersLosersBean.setPrecChange(rs.getDouble(8));
+                gainersLoserList.add(gainersLosersBean);
+
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            closeConnection(conn);
+        }
+        return gainersLoserList;
     }
 
 }

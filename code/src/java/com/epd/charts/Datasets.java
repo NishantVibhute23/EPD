@@ -28,7 +28,7 @@ public class Datasets {
         this.data = new ArrayList<>();
         this.borderColor = "";
         this.borderWidth = 1;
-        this.hidden = true;
+        this.hidden = false;
         this.fill = false;
         this.lineTension = 0;
         pointRadius = 3;

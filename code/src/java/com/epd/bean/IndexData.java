@@ -24,6 +24,8 @@ public class IndexData {
     private String prevChange;
     private String dateTime;
     private double MA200;
+    int gainerLoserType;
+    private int transactionType;
 
     public int getIndexTypeId() {
         return indexTypeId;
@@ -127,6 +129,22 @@ public class IndexData {
 
     public void setMA200(double MA200) {
         this.MA200 = MA200;
+    }
+
+    public int getGainerLoserType() {
+        return gainerLoserType;
+    }
+
+    public void setGainerLoserType(int gainerLoserType) {
+        this.gainerLoserType = gainerLoserType;
+    }
+
+    public int getTransactionType() {
+        return transactionType;
+    }
+
+    public void setTransactionType(int transactionType) {
+        this.transactionType = transactionType;
     }
 
 }

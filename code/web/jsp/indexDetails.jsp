@@ -26,10 +26,16 @@
             .table-responsive {overflow: hidden !important}
             body {line-height: 0.2 !important}
             .card-body {padding-top: 0px !important;padding-bottom: 0px !important}
-           .mt-100{
-    margin-top:100px;
-}
-    
+            .mt-100{
+                margin-top:100px;
+            }
+            
+            canvas {
+		-moz-user-select: none;
+		-webkit-user-select: none;
+		-ms-user-select: none;
+	}
+
         </style>
     </head>
 
@@ -43,73 +49,67 @@
                 <div class="content">
                     <div class="row">
                         <div class="col-12">
-                            <s:hidden id="data" value="%{dataMA}" name="dataMA"/>
-                            <div id="line-chart"></div>
+                            <s:hidden id="dataChart" value="%{chartData}" name="chartData"/>
+                            <div style="width:75%;">
+		<button onclick="resetZoom()">Reset Zoom</button>
+		<canvas id="canvas"></canvas>
+	</div>
                         </div>
                     </div>
                 </div>
 
             </div>
-           
 
-        <!--   Core JS Files   -->
-        <script src="assets/js/core/jquery.min.js"></script>
-        <script src="assets/js/core/popper.min.js"></script>
-        <!--<script src="assets/js/core/bootstrap.min.js"></script>-->
-        <script src="assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
-        <!--  Google Maps Plugin    -->
-        <!-- Place this tag in your head or just before your close body tag. -->
 
-<!--<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>-->
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
-<script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
-        <!-- Chart JS -->
-        <script src="assets/js/plugins/chartjs.min.js"></script>
-        <!--  Notifications Plugin    -->
-        <script src="assets/js/plugins/bootstrap-notify.js"></script>
-        <!-- Control Center for Black Dashboard: parallax effects, scripts for the example pages etc -->
-        <script src="assets/js/black-dashboard.min.js?v=1.0.0"></script>
-        <!-- Black Dashboard DEMO methods, don't include it in your project! -->
+            <!--   Core JS Files   -->
+            <script src="assets/js/core/jquery.min.js"></script>
+            <script src="assets/js/core/popper.min.js"></script>
+            <!--<script src="assets/js/core/bootstrap.min.js"></script>-->
+            <script src="assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+            <!--  Google Maps Plugin    -->
+            <!-- Place this tag in your head or just before your close body tag. -->
+
+            <!-- Chart JS -->
+            <script src="assets/js/plugins/chartjs.min.js"></script>
+            <!--  Notifications Plugin    -->
+            <script src="assets/js/plugins/bootstrap-notify.js"></script>
+            <!-- Control Center for Black Dashboard: parallax effects, scripts for the example pages etc -->
+            <script src="assets/js/black-dashboard.min.js?v=1.0.0"></script>
+                        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
+             <script src="https://npmcdn.com/chart.js@latest/dist/Chart.bundle.min.js"></script>
+             <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.js"></script>
+              <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-zoom/0.6.3/chartjs-plugin-zoom.js"></script>
+  
+            
+            <!-- Black Dashboard DEMO methods, don't include it in your project! -->
 
 
     </body>
 
     <script>
-        $(document).ready(function() {
-            
-         
-                       
-            
-
-  
-  
-  var line =  Morris.Line({
-    element: 'line-chart',
-    xkey: 'companyName',
-    ykeys: ['LTP', 'LTP'],
-    labels: ['Series A', 'Series B'],
-    lineColors: ['#1e88e5','#ff3321'],
-    lineWidth: '3px',
-    resize: true,
-    redraw: true
-  });
-
-  lineChart();
-
-  $(window).resize(function() {
-    window.lineChart.redraw();
-  });
-  
-  
-  function lineChart() {
-line.setData($("#data").val());
+        function resetZoom() {
+  window.myLine.resetZoom();
 }
-});
-        
+       $("#resetZooom").click(function(){window.myLine.resetZoom();});
+       
+        $(document).ready(function () {
+ var ctx = document.getElementById('canvas').getContext('2d');
+ var chartData = $("#dataChart").val();
+ 
+ var obj = JSON.parse(chartData);
+ window.myLine =new Chart(ctx, obj);
+ 
 
-        </script>
-        
-   
-
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+        });
+    </script>
 </html>

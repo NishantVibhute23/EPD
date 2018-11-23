@@ -15,12 +15,17 @@ public class Options {
     private Title title;
     private boolean responsive;
     private String onClick;
+    private Pan pan;
+    private Zoom zoom;
 
     public Options() {
         this.scales = new Scales();
         this.title = new Title();
         this.responsive = true;
         this.onClick = "";
+        this.pan = new Pan();
+        this.zoom = new Zoom();
+
     }
 
     public Scales getScales() {
@@ -53,6 +58,22 @@ public class Options {
 
     public void setOnClick(String onClick) {
         this.onClick = onClick;
+    }
+
+    public Pan getPan() {
+        return pan;
+    }
+
+    public void setPan(Pan pan) {
+        this.pan = pan;
+    }
+
+    public Zoom getZoom() {
+        return zoom;
+    }
+
+    public void setZoom(Zoom zoom) {
+        this.zoom = zoom;
     }
 
 }

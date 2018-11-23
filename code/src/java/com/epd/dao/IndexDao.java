@@ -125,4 +125,89 @@ public class IndexDao {
         return indexList;
     }
 
+    public String getPreviousDate(String currentDate) {
+        String prevDate = "";
+        try {
+            this.con = db.getConnection();
+            PreparedStatement ps = this.con.prepareStatement("call getPreviousDays(?)");
+            ps.setString(1, currentDate);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+
+                prevDate = rs.getString(1);
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            db.closeConnection(con);
+        }
+        return prevDate;
+    }
+
+    public void insertWishList(int CompanyId, int type) {
+        try {
+            this.con = db.getConnection();
+            PreparedStatement ps = this.con.prepareStatement("call insert_wishlist(?,?)");
+            ps.setInt(1, CompanyId);
+            ps.setInt(2, type);
+
+            ResultSet rs = ps.executeQuery();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            db.closeConnection(con);
+        }
+    }
+
+    public List<IndexData> getTodaysWishlist(String currentDate) {
+        List<IndexData> indexList = new ArrayList<>();
+
+        try {
+            this.con = db.getConnection();
+            PreparedStatement ps = this.con.prepareStatement("call getTodaysWishlist(?)");
+            ps.setString(1, currentDate);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                IndexData ind = new IndexData();
+                ind.setCompanyId(rs.getInt(1));
+                ind.setGainerLoserType(rs.getInt(2));
+                ind.setLTP(rs.getDouble(3));
+
+                indexList.add(ind);
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            db.closeConnection(con);
+        }
+        return indexList;
+    }
+
+    public double getCurrentPrice(int companyId) {
+
+        double price = 0.0;
+        try {
+            this.con = db.getConnection();
+            PreparedStatement ps = this.con.prepareStatement("call getCurrentPrice(?)");
+            ps.setInt(1, companyId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+
+                price = rs.getDouble(1);
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            db.closeConnection(con);
+        }
+        return price;
+    }
+
 }

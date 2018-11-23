@@ -9,6 +9,7 @@ package com.epd.scheduler;
  *
  * @author dabbu
  */
+import com.epd.stategy.StockNiftyMomentumTrend;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.quartz.CronScheduleBuilder;
@@ -16,7 +17,6 @@ import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
-import org.quartz.SimpleScheduleBuilder;
 import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 import org.quartz.impl.StdSchedulerFactory;
@@ -54,6 +54,20 @@ public class QuartzScheduler {
                     .withSchedule(CronScheduleBuilder.cronSchedule("0/30 * * ? * MON,TUE,WED,THU,FRI *")).build();
 
             scheduler.scheduleJob(jobGetStockPriceValue, triggerGetStockPriceValue);
+
+            JobDetail jobStockNiftyMomentumTrend = JobBuilder.newJob(StockNiftyMomentumTrend.class).withIdentity("GetStockNiftyMomentumTrend", "group").build();
+
+            Trigger triggerStockNiftyMomentumTrend = TriggerBuilder.newTrigger().withIdentity("GetStockNiftyMomentumTrend", "group")
+                    .withSchedule(CronScheduleBuilder.cronSchedule("0/30 * * ? * MON,TUE,WED,THU,FRI *")).build();
+
+            scheduler.scheduleJob(jobStockNiftyMomentumTrend, triggerStockNiftyMomentumTrend);
+
+            JobDetail jobPositionRoundOff = JobBuilder.newJob(PositionRoundOff.class).withIdentity("GetPositionRoundOff", "group").build();
+
+            Trigger triggerPositionRoundOff = TriggerBuilder.newTrigger().withIdentity("GetPositionRoundOff", "group")
+                    .withSchedule(CronScheduleBuilder.cronSchedule("0/30 * * ? * MON,TUE,WED,THU,FRI *")).build();
+
+            scheduler.scheduleJob(jobPositionRoundOff, triggerPositionRoundOff);
 
             // schedule it
         } catch (SchedulerException ex) {

@@ -47,4 +47,25 @@ public class StategyDao {
         return indexList;
     }
 
+    public List<Double> getNiftyPrices() {
+        List<Double> priceList = new ArrayList<>();
+        try {
+            this.con = db.getConnection();
+            PreparedStatement ps = this.con.prepareStatement("call getNiftyPrices()");
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+
+                priceList.add(rs.getDouble(2));
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            db.closeConnection(con);
+        }
+        return priceList;
+    }
+
 }

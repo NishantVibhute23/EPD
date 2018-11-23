@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class Data {
 
-    private List<Double> labels;
+    private List<String> labels;
     private List<Datasets> datasets;
 
     public Data() {
@@ -22,11 +22,11 @@ public class Data {
         this.datasets = new ArrayList<>();
     }
 
-    public List<Double> getLabels() {
+    public List<String> getLabels() {
         return labels;
     }
 
-    public void setLabels(List<Double> labels) {
+    public void setLabels(List<String> labels) {
         this.labels = labels;
     }
 
